@@ -235,6 +235,26 @@ public:
 			algorithm::swap(_Data[S], _Data[E]);
 	}
 
+
+	constexpr bool operator==(const Stack& _rhs) const
+	{
+		if (this == &_rhs) return true;
+		if (_Size != _rhs._Size) return false;
+
+		for (size_t i(0); i < _Size; ++i) {
+			if (_Data[i] != _rhs._Data[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	constexpr bool operator!=(const Stack& _rhs) const
+	{
+		return !(*this == _rhs);
+	}
+
+
 	// demo
 	constexpr void print()
 	{
