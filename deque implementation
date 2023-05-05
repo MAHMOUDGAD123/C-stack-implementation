@@ -421,7 +421,7 @@ public:
 		_Base::operator++();
 		return *this;
 	}
-	constexpr deque_reverse_iterator operator++(int) const noexcept
+	constexpr deque_reverse_iterator operator++(int) noexcept
 	{
 		deque_reverse_iterator _temp = *this;
 		_Base::operator++();
@@ -433,7 +433,7 @@ public:
 		_Base::operator--();
 		return *this;
 	}
-	constexpr deque_reverse_iterator operator--(int) const noexcept
+	constexpr deque_reverse_iterator operator--(int) noexcept
 	{
 		deque_reverse_iterator _temp = *this;
 		_Base::operator--();
