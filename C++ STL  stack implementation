@@ -85,7 +85,7 @@ public:
 
 	//==============================================================
 
-	// comparsion opertors == / !=
+	// comparison opertors == / !=
 	constexpr bool operator==(const istack& _rhs) const noexcept { return _C_ == _rhs._C_; }
 	constexpr bool operator!=(const istack& _rhs) const noexcept { return _C_ != _rhs._C_; }
 
