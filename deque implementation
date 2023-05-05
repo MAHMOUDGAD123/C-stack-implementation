@@ -117,7 +117,7 @@ public:
 	}
 
 
-	// compartion operators
+	// comparison operators
 	//-------------------------------------------------------------------------
 	constexpr bool operator==(const deque_iterator& other) const noexcept
 	{
@@ -257,7 +257,7 @@ public:
 	}
 
 
-	// compartion operators
+	// comparison operators
 	//-------------------------------------------------------------------------
 	constexpr bool operator==(const deque_const_iterator& other) const noexcept
 	{
@@ -397,7 +397,7 @@ public:
 	}
 
 
-	// compartion operators
+	// comparison operators
 	//-------------------------------------------------------------------------
 	constexpr bool operator==(const deque_reverse_iterator& _rhs) const noexcept
 	{
@@ -531,7 +531,7 @@ public:
 	}
 
 
-	// compartion operators
+	// comparison operators
 	//-------------------------------------------------------------------------
 	constexpr bool operator==(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
