@@ -12,145 +12,9 @@ MG_BEGIN
 
 
 
-
 //=====================================================================================================
 //=========================================== Froward Iterator ======================================== 
 //=====================================================================================================
-
-
-// deque iterator class
-template <typename _Deque>
-class deque_iterator
-{
-public:
-	using value_type = typename _Deque::value_type;
-	using pointer = typename _Deque::pointer;
-	using reference = typename _Deque::reference;
-	using size_type = typename _Deque::size_type;
-	using ptrdiff_type = typename _Deque::ptrdiff_type;
-
-private:
-	pointer _ptr;
-
-public:
-	constexpr deque_iterator() : _ptr(nullptr) {}
-	constexpr deque_iterator(pointer ptr) : _ptr(ptr) {}
-
-	constexpr reference operator*() const noexcept
-	{
-		return *_ptr;
-	}
-
-	constexpr pointer operator->() const noexcept
-	{
-		return _ptr;
-	}
-
-	constexpr reference operator[](const ptrdiff_type _idx) const noexcept
-	{
-		return *(_ptr + _idx);
-	}
-
-	constexpr deque_iterator& operator++() noexcept
-	{
-		// pre increament
-		++_ptr;
-		return *this;
-	}
-	constexpr deque_iterator operator++(int) noexcept
-	{
-		// post increament
-		deque_iterator _temp = *this;
-		++_ptr;
-		return _temp;
-	}
-
-	constexpr deque_iterator& operator--() noexcept
-	{
-		// pre decreament
-		--_ptr;
-		return *this;
-	}
-	constexpr deque_iterator operator--(int) noexcept
-	{
-		// post decreament
-		deque_iterator _temp = *this;
-		--_ptr;
-		return _temp;
-	}
-
-	constexpr deque_iterator& operator+=(const ptrdiff_type _Off) noexcept
-	{
-		_ptr += _Off;
-		return *this;
-	}
-
-	constexpr deque_iterator operator+(const ptrdiff_type _Off) const noexcept
-	{
-		return { _ptr + _Off };
-	}
-
-	constexpr deque_iterator& operator-=(const ptrdiff_type _Off) noexcept
-	{
-		_ptr -= _Off;
-		return *this;
-	}
-
-	constexpr deque_iterator operator-(const ptrdiff_type _Off) const noexcept
-	{
-		return { _ptr - _Off };
-	}
-
-	friend constexpr deque_iterator operator+(const ptrdiff_type _Off, const deque_iterator& _Right)
-	{
-		return { _Right._ptr + _Off };
-	}
-
-	friend constexpr deque_iterator operator-(const ptrdiff_type _Off, const deque_iterator& _Right)
-	{
-		return { _Right._ptr - _Off };
-	}
-
-	friend constexpr ptrdiff_type operator-(const deque_iterator& _Left, const deque_iterator& _Right)
-	{
-		return static_cast<ptrdiff_type>(_Left._ptr - _Right._ptr);
-	}
-
-
-	// comparison operators
-	//-------------------------------------------------------------------------
-	constexpr bool operator==(const deque_iterator& other) const noexcept
-	{
-		return _ptr == other._ptr;
-	}
-
-	constexpr bool operator !=(const deque_iterator& other) const noexcept
-	{
-		return _ptr != other._ptr;
-	}
-
-	constexpr bool operator<(const deque_iterator& other) const noexcept
-	{
-		return _ptr < other._ptr;
-	}
-
-	constexpr bool operator>(const deque_iterator& other) const noexcept
-	{
-		return _ptr > other._ptr;
-	}
-
-	constexpr bool operator<=(const deque_iterator& other) const noexcept
-	{
-		return _ptr <= other._ptr;
-	}
-
-	constexpr bool operator>=(const deque_iterator& other) const noexcept
-	{
-		return _ptr >= other._ptr;
-	}
-	//-------------------------------------------------------------------------
-
-};
 
 
 // deque const_iterator class
@@ -165,95 +29,85 @@ public:
 	using ptrdiff_type = typename _Deque::ptrdiff_type;
 
 private:
-	pointer _ptr;
+	pointer _Ptr;
 
 public:
-	constexpr deque_const_iterator() : _ptr(nullptr) {}
-	constexpr deque_const_iterator(pointer ptr) : _ptr(ptr) {}
+	constexpr deque_const_iterator() : _Ptr(nullptr) {}
+	constexpr deque_const_iterator(pointer Data_Ptr) : _Ptr(Data_Ptr) {}
 
 	constexpr reference operator*() const noexcept
 	{
-		return *_ptr;
+		return *_Ptr;
 	}
 
 	constexpr pointer operator->() const noexcept
 	{
-		return _ptr;
+		return _Ptr;
 	}
 
 	constexpr reference operator[](const ptrdiff_type _idx) const noexcept
 	{
-		return *(_ptr + _idx);
+		return *(_Ptr + _idx);
 	}
 
 	constexpr deque_const_iterator& operator++() noexcept
 	{
 		// pre increament
-		++_ptr;
+		++_Ptr;
 		return *this;
 	}
 	constexpr deque_const_iterator operator++(int) noexcept
 	{
 		// post increament
 		deque_const_iterator _temp = *this;
-		++_ptr;
+		++_Ptr;
 		return _temp;
 	}
 
 	constexpr deque_const_iterator& operator--() noexcept
 	{
 		// pre decreament
-		--_ptr;
+		--_Ptr;
 		return *this;
 	}
 	constexpr deque_const_iterator operator--(int) noexcept
 	{
 		// post decreament
 		deque_const_iterator _temp = *this;
-		--_ptr;
+		--_Ptr;
 		return _temp;
 	}
 
 	constexpr deque_const_iterator& operator+=(const ptrdiff_type _Off) noexcept
 	{
-		_ptr += _Off;
+		_Ptr += _Off;
+		return *this;
+	}
+
+	constexpr deque_const_iterator& operator-=(const ptrdiff_type _Off) noexcept
+	{
+		_Ptr -= _Off;
 		return *this;
 	}
 
 	constexpr deque_const_iterator operator+(const ptrdiff_type _Off) const noexcept
 	{
-		deque_const_iterator _temp = *this;
-		_temp += _Off;
-		return _temp;
-	}
-
-	constexpr deque_const_iterator& operator-=(const ptrdiff_type _Off) noexcept
-	{
-		_ptr -= _Off;
-		return *this;
+		return { _Ptr + _Off };
 	}
 
 	constexpr deque_const_iterator operator-(const ptrdiff_type _Off) const noexcept
 	{
-		deque_const_iterator _temp = *this;
-		_temp -= _Off;
-		return _temp;
+		return { _Ptr - _Off };
 	}
 
+	constexpr ptrdiff_type operator-(const deque_const_iterator& _Right) const noexcept
+	{
+		return _Ptr - _Right._Ptr;
+	}
 
-	friend constexpr deque_const_iterator operator+(const ptrdiff_type _Off, deque_const_iterator _Right)
+	friend constexpr deque_const_iterator operator+(const ptrdiff_type _Off, const deque_const_iterator& _Right)
 	{
 		return { _Right + _Off };
-	}
-
-	friend constexpr deque_const_iterator operator-(const ptrdiff_type _Off, deque_const_iterator _Right)
-	{
-		return { _Right - _Off };
-	}
-
-	friend constexpr ptrdiff_type operator-(deque_const_iterator _Left, deque_const_iterator _Right)
-	{
-		return static_cast<ptrdiff_type>(_Left._ptr - _Right._ptr);
 	}
 
 
@@ -261,32 +115,32 @@ public:
 	//-------------------------------------------------------------------------
 	constexpr bool operator==(const deque_const_iterator& other) const noexcept
 	{
-		return _ptr == other._ptr;
+		return _Ptr == other._Ptr;
 	}
 
 	constexpr bool operator !=(const deque_const_iterator& other) const noexcept
 	{
-		return _ptr != other._ptr;
+		return _Ptr != other._Ptr;
 	}
 
 	constexpr bool operator<(const deque_const_iterator& other) const noexcept
 	{
-		return _ptr < other._ptr;
+		return _Ptr < other._Ptr;
 	}
 
 	constexpr bool operator>(const deque_const_iterator& other) const noexcept
 	{
-		return _ptr > other._ptr;
+		return _Ptr > other._Ptr;
 	}
 
 	constexpr bool operator<=(const deque_const_iterator& other) const noexcept
 	{
-		return _ptr <= other._ptr;
+		return _Ptr <= other._Ptr;
 	}
 
 	constexpr bool operator>=(const deque_const_iterator& other) const noexcept
 	{
-		return _ptr >= other._ptr;
+		return _Ptr >= other._Ptr;
 	}
 	//-------------------------------------------------------------------------
 
@@ -294,14 +148,9 @@ public:
 
 
 
-//=====================================================================================================
-//=========================================== Reverse Iterator ========================================
-//=====================================================================================================
-
-
-// deque reverse iterator class
+// deque iterator class
 template <typename _Deque>
-class deque_reverse_iterator
+class deque_iterator : public deque_const_iterator<_Deque>
 {
 public:
 	using value_type = typename _Deque::value_type;
@@ -310,128 +159,100 @@ public:
 	using size_type = typename _Deque::size_type;
 	using ptrdiff_type = typename _Deque::ptrdiff_type;
 
-private:
-	pointer _ptr;
+	using _Base = deque_const_iterator<_Deque>;
 
 public:
-	constexpr deque_reverse_iterator() : _ptr(nullptr) {}
-	constexpr deque_reverse_iterator(pointer ptr) : _ptr(ptr) {}
+	constexpr deque_iterator() noexcept {}
+	constexpr deque_iterator(pointer Data_Ptr) noexcept : _Base(Data_Ptr) {}
 
 	constexpr reference operator*() const noexcept
 	{
-		pointer _temp = _ptr;
-		return *--_temp;
-	}
-
-	constexpr pointer operator->() const noexcept
-	{
-		pointer _temp = _ptr;
-		return --_temp;
+		return const_cast<reference>(_Base::operator*());
 	}
 
 	constexpr reference operator[](const ptrdiff_type _idx) const noexcept
 	{
-		return *(_ptr - _idx - 1);
+		return const_cast<reference>(_Base::operator[](_idx));
 	}
 
-	constexpr deque_reverse_iterator& operator++() noexcept
+	constexpr pointer operator->() const noexcept
 	{
-		--_ptr;
+		return const_cast<pointer>(_Base::operator->());
+	}
+
+	constexpr deque_iterator& operator++() noexcept
+	{
+		// pre increament
+		_Base::operator++();
 		return *this;
 	}
-	constexpr deque_reverse_iterator operator++(int) noexcept
+	constexpr deque_iterator operator++(int) noexcept
 	{
-		deque_reverse_iterator _temp = *this;
-		--_ptr;
+		// post increament
+		deque_iterator _temp = *this;
+		_Base::operator++();
 		return _temp;
 	}
 
-	constexpr deque_reverse_iterator& operator--() noexcept
+	constexpr deque_iterator& operator--() noexcept
 	{
-		++_ptr;
+		// pre decreament
+		_Base::operator--();
 		return *this;
 	}
-	constexpr deque_reverse_iterator operator--(int) noexcept
+	constexpr deque_iterator operator--(int) noexcept
 	{
-		deque_reverse_iterator _temp = *this;
-		++_ptr;
+		// post decreament
+		deque_iterator _temp = *this;
+		_Base::operator--();
 		return _temp;
 	}
 
-	constexpr deque_reverse_iterator& operator+=(const ptrdiff_type _Off) noexcept
+	constexpr deque_iterator& operator+=(const ptrdiff_type _Off) noexcept
 	{
-		_ptr -= _Off;
+		_Base::operator+=(_Off);
 		return *this;
 	}
 
-	constexpr deque_reverse_iterator operator+(const ptrdiff_type _Off) const noexcept
+	constexpr deque_iterator& operator-=(const ptrdiff_type _Off) noexcept
 	{
-		return { _ptr - _Off };
-	}
-
-	constexpr deque_reverse_iterator& operator-=(const ptrdiff_type _Off) noexcept
-	{
-		_ptr += _Off;
+		_Base::operator-=(_Off);
 		return *this;
 	}
 
-	constexpr deque_reverse_iterator operator-(const ptrdiff_type _Off) const noexcept
+	constexpr deque_iterator operator+(const ptrdiff_type _Off) const noexcept
 	{
-		return { _ptr + _Off };
+		deque_iterator _temp = *this;
+		_temp += _Off;
+		return _temp;
+	}
+
+	constexpr deque_iterator operator-(const ptrdiff_type _Off) const noexcept
+	{
+		deque_iterator _temp = *this;
+		_temp -= _Off;
+		return _temp;
+	}
+
+	constexpr ptrdiff_type operator-(const deque_iterator& _Right) const noexcept
+	{
+		return _Base::operator-(_Right);
 	}
 
 
-	friend constexpr deque_reverse_iterator operator+(const ptrdiff_type _Off, const deque_reverse_iterator& _Right)
+	friend constexpr deque_iterator operator+(const ptrdiff_type _Off, const deque_iterator& _Right) noexcept
 	{
-		return { _Right._ptr - _Off };
+		return { _Right + _Off };
 	}
 
-	friend constexpr deque_reverse_iterator operator-(const ptrdiff_type _Off, const deque_reverse_iterator& _Right)
-	{
-		return { _Right._ptr + _Off };
-	}
-
-	friend constexpr ptrdiff_type operator-(const deque_reverse_iterator& _Left, const deque_reverse_iterator& _Right)
-	{
-		return static_cast<ptrdiff_type>(_Right._ptr - _Left._ptr);
-	}
-
-
-	// comparison operators
-	//-------------------------------------------------------------------------
-	constexpr bool operator==(const deque_reverse_iterator& _rhs) const noexcept
-	{
-		return _ptr == _rhs._ptr;
-	}
-
-	constexpr bool operator !=(const deque_reverse_iterator& _rhs) const noexcept
-	{
-		return _ptr != _rhs._ptr;
-	}
-
-	constexpr bool operator<(const deque_reverse_iterator& _rhs) const noexcept
-	{
-		return _ptr > _rhs._ptr;
-	}
-
-	constexpr bool operator>(const deque_reverse_iterator& _rhs) const noexcept
-	{
-		return _ptr < _rhs._ptr;
-	}
-
-	constexpr bool operator<=(const deque_reverse_iterator& _rhs) const noexcept
-	{
-		return _ptr >= _rhs._ptr;
-	}
-
-	constexpr bool operator>=(const deque_reverse_iterator& _rhs) const noexcept
-	{
-		return _ptr <= _rhs._ptr;
-	}
-	//-------------------------------------------------------------------------
 
 };
 
+
+
+//=====================================================================================================
+//=========================================== Reverse Iterator ========================================
+//=====================================================================================================
 
 
 // deque const_reverse iterator class
@@ -446,88 +267,83 @@ public:
 	using ptrdiff_type = typename _Deque::ptrdiff_type;
 
 private:
-	pointer _ptr;
+	pointer _Ptr;
 
 public:
-	constexpr deque_const_reverse_iterator() : _ptr(nullptr) {}
-	constexpr deque_const_reverse_iterator(pointer ptr) : _ptr(ptr) {}
+	constexpr deque_const_reverse_iterator() : _Ptr(nullptr) {}
+	constexpr deque_const_reverse_iterator(pointer Data_Ptr) : _Ptr(Data_Ptr) {}
 
 	constexpr reference operator*() const noexcept
 	{
-		pointer _temp = _ptr;
+		pointer _temp = _Ptr;
 		return *--_temp;
-	}
-
-	constexpr pointer operator->() const noexcept
-	{
-		pointer _temp = _ptr;
-		return --_temp;
 	}
 
 	constexpr reference operator[](const ptrdiff_type _idx) const noexcept
 	{
-		return *(_ptr - _idx - 1);
+		return *(_Ptr - _idx - 1);
+	}
+
+	constexpr pointer operator->() const noexcept
+	{
+		pointer _temp = _Ptr;
+		return --_temp;
 	}
 
 	constexpr deque_const_reverse_iterator& operator++() noexcept
 	{
-		--_ptr;
+		--_Ptr;
 		return *this;
 	}
 	constexpr deque_const_reverse_iterator operator++(int) noexcept
 	{
 		deque_const_reverse_iterator _temp = *this;
-		--_ptr;
+		--_Ptr;
 		return _temp;
 	}
 
 	constexpr deque_const_reverse_iterator& operator--() noexcept
 	{
-		++_ptr;
+		++_Ptr;
 		return *this;
 	}
 	constexpr deque_const_reverse_iterator operator--(int) noexcept
 	{
 		deque_const_reverse_iterator _temp = *this;
-		++_ptr;
+		++_Ptr;
 		return _temp;
 	}
 
 	constexpr deque_const_reverse_iterator& operator+=(const ptrdiff_type _Off) noexcept
 	{
-		_ptr -= _Off;
+		_Ptr -= _Off;
+		return *this;
+	}
+
+	constexpr deque_const_reverse_iterator& operator-=(const ptrdiff_type _Off) noexcept
+	{
+		_Ptr += _Off;
 		return *this;
 	}
 
 	constexpr deque_const_reverse_iterator operator+(const ptrdiff_type _Off) const noexcept
 	{
-		return { _ptr - _Off };
-	}
-
-	constexpr deque_const_reverse_iterator& operator-=(const ptrdiff_type _Off) noexcept
-	{
-		_ptr += _Off;
-		return *this;
+		return { _Ptr - _Off };
 	}
 
 	constexpr deque_const_reverse_iterator operator-(const ptrdiff_type _Off) const noexcept
 	{
-		return { _ptr + _Off };
+		return { _Ptr + _Off };
 	}
 
-	friend constexpr deque_const_reverse_iterator operator+(const ptrdiff_type _Off, const deque_const_reverse_iterator& _Right)
+	constexpr ptrdiff_type operator-(const deque_const_reverse_iterator& _Right) const noexcept
 	{
-		return _Right._ptr - _Off;
+		return _Right._Ptr - _Ptr;
 	}
 
-	friend constexpr deque_const_reverse_iterator operator-(const ptrdiff_type _Off, const deque_const_reverse_iterator& _Right)
+	friend constexpr deque_const_reverse_iterator operator+(const ptrdiff_type _Off, const deque_const_reverse_iterator& _Right) noexcept
 	{
-		return _Right._ptr + _Off;
-	}
-
-	friend constexpr ptrdiff_type operator-(const deque_const_reverse_iterator& _Left, const deque_const_reverse_iterator& _Right)
-	{
-		return static_cast<ptrdiff_type>(_Right._ptr - _Left._ptr);
+		return { _Right + _Off };
 	}
 
 
@@ -535,34 +351,131 @@ public:
 	//-------------------------------------------------------------------------
 	constexpr bool operator==(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
-		return _ptr == _rhs._ptr;
+		return _Ptr == _rhs._Ptr;
 	}
 
 	constexpr bool operator !=(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
-		return _ptr != _rhs._ptr;
+		return _Ptr != _rhs._Ptr;
 	}
 
 	constexpr bool operator<(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
-		return _ptr > _rhs._ptr;
+		return _Ptr > _rhs._Ptr;
 	}
 
 	constexpr bool operator>(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
-		return _ptr < _rhs._ptr;
+		return _Ptr < _rhs._Ptr;
 	}
 
 	constexpr bool operator<=(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
-		return _ptr >= _rhs._ptr;
+		return _Ptr >= _rhs._Ptr;
 	}
 
 	constexpr bool operator>=(const deque_const_reverse_iterator& _rhs) const noexcept
 	{
-		return _ptr <= _rhs._ptr;
+		return _Ptr <= _rhs._Ptr;
 	}
 	//-------------------------------------------------------------------------
+
+};
+
+
+
+// deque reverse iterator class
+template <typename _Deque>
+class deque_reverse_iterator : public deque_const_reverse_iterator<_Deque>
+{
+public:
+	using value_type = typename _Deque::value_type;
+	using pointer = typename _Deque::pointer;
+	using reference = typename _Deque::reference;
+	using size_type = typename _Deque::size_type;
+	using ptrdiff_type = typename _Deque::ptrdiff_type;
+
+	using _Base = deque_const_reverse_iterator<_Deque>;
+
+public:
+	constexpr deque_reverse_iterator() noexcept {}
+	constexpr deque_reverse_iterator(pointer Data_Ptr) noexcept : _Base(Data_Ptr) {}
+
+	constexpr reference operator*() const noexcept
+	{
+		return const_cast<reference>(_Base::operator*());
+	}
+
+	constexpr reference operator[](const ptrdiff_type _Off) const noexcept
+	{
+		return const_cast<reference>(_Base::operator[](_Off));
+	}
+
+	constexpr pointer operator->() const noexcept
+	{
+		return const_cast<pointer>(_Base::operator->());
+	}
+
+	constexpr deque_reverse_iterator& operator++() noexcept
+	{
+		_Base::operator++();
+		return *this;
+	}
+	constexpr deque_reverse_iterator operator++(int) const noexcept
+	{
+		deque_reverse_iterator _temp = *this;
+		_Base::operator++();
+		return _temp;
+	}
+
+	constexpr deque_reverse_iterator& operator--() noexcept
+	{
+		_Base::operator--();
+		return *this;
+	}
+	constexpr deque_reverse_iterator operator--(int) const noexcept
+	{
+		deque_reverse_iterator _temp = *this;
+		_Base::operator--();
+		return _temp;
+	}
+
+	constexpr deque_reverse_iterator& operator+=(const ptrdiff_type _Off) noexcept
+	{
+		_Base::operator+=(_Off);
+		return *this;
+	}
+
+	constexpr deque_reverse_iterator& operator-=(const ptrdiff_type _Off) noexcept
+	{
+		_Base::operator-=(_Off);
+		return *this;
+	}
+
+	constexpr deque_reverse_iterator operator+(const ptrdiff_type _Off) const noexcept
+	{
+		deque_reverse_iterator _temp = *this;
+		_temp += _Off;
+		return _temp;
+	}
+
+	constexpr deque_reverse_iterator operator-(const ptrdiff_type _Off) const noexcept
+	{
+		deque_reverse_iterator _temp = *this;
+		_temp -= _Off;
+		return _temp;
+	}
+
+	constexpr ptrdiff_type operator-(const deque_reverse_iterator& _Right) const noexcept
+	{
+		return _Base::operator-(_Right);
+	}
+
+	friend constexpr deque_reverse_iterator operator+(const ptrdiff_type _Off, const deque_reverse_iterator& _Right)
+	{
+		return { _Right + _Off };
+	}
+
 
 };
 
@@ -801,8 +714,8 @@ public:
 
 	constexpr bool empty() const noexcept { return _size == 0; }
 
-	constexpr reference operator[](size_type _pos) { return _data[_first + static_cast<ptrdiff_type>(_pos)]; }
-	constexpr const_reference operator[](size_type _pos) const { return _data[_first + static_cast<ptrdiff_type>(_pos)]; }
+	constexpr reference operator[](size_type _pos) { return _data[_first + _pos]; }
+	constexpr const_reference operator[](size_type _pos) const { return _data[_first + _pos]; }
 
 	void push_back(const_reference _val)
 	{
@@ -897,14 +810,15 @@ public:
 
 	void shrink_to_fit()
 	{
-		if (!empty()) {
-			size_type _newCapacity = _get_capacity(_size);
+		if (!empty()) return;
 
-			if (_newCapacity != _capacity) {
-				deque _temp(begin(), end());
-				swap(_temp);
-			}
+		size_type _newCapacity = _get_capacity(_size);
+
+		if (_newCapacity != _capacity) {
+			deque _temp(begin(), end());
+			swap(_temp);
 		}
+
 	}
 
 	void swap(deque& other) noexcept
@@ -928,20 +842,20 @@ public:
 	// forward iterator
 	constexpr iterator begin() noexcept { return iterator(_data + _first); }
 	constexpr const_iterator begin() const noexcept { return const_iterator(_data + _first); }
-	constexpr const_iterator cbegin() const noexcept { return const_iterator(_data + _first); }
+	constexpr const_iterator cbegin() const noexcept { return begin(); }
 
 	constexpr iterator end() noexcept { return iterator(_data + _first + _size); }
-	constexpr const_iterator end() const noexcept  { return const_iterator(_data + _first + _size); }
-	constexpr const_iterator cend() const noexcept { return const_iterator(_data + _first + _size); }
+	constexpr const_iterator end() const noexcept { return const_iterator(_data + _first + _size); }
+	constexpr const_iterator cend() const noexcept { return end(); }
 
 	// reverse iterator
 	constexpr reverse_iterator rbegin() noexcept { return reverse_iterator(_data + _first + _size); }
 	constexpr const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(_data + _first + _size); }
-	constexpr const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(_data + _first + _size); }
+	constexpr const_reverse_iterator crbegin() const noexcept { return rbegin(); }
 
 	constexpr reverse_iterator rend() noexcept { return reverse_iterator(_data + _first); }
 	constexpr const_reverse_iterator rend() const noexcept { return const_reverse_iterator(_data + _first); }
-	constexpr const_reverse_iterator crend() const noexcept { return const_reverse_iterator(_data + _first); }
+	constexpr const_reverse_iterator crend() const noexcept { return rend(); }
 	//---------------------------------------------------------------------------------
 
 	constexpr bool operator==(const deque& _rhs) const noexcept
@@ -963,7 +877,10 @@ public:
 	}
 
 
-	
+
 };
+
+
+
 
 MG_END
